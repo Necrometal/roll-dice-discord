@@ -1,9 +1,7 @@
 const Discord = require('discord.js');
-const { messageReply, rollDice } = require('./command/roll.js');
+const { messageReply, rollDice, checkCommand } = require('./command/roll.js');
 
 const bot = new Discord.Client();
-
-const prefix = "!";
 
 bot.on("ready", () => {
     console.log('ready');
@@ -13,11 +11,10 @@ bot.on("message", (message) => {
     
     if(message.author.bot) return;
 
-    if(message.content.charAt(0) == prefix){
-        var result = rollDice(message.content, prefix);
+    if(checkCommand(message.content)){
+        var result = rollDice(message.content);
         if(result){
             message.reply(messageReply(result));
-            // message.reply(messageReply(result));
         }
     }
 });
